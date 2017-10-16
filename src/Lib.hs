@@ -7,6 +7,9 @@ data HTML =
     Elem String
   | Children [HTML]
 
+parseDoctype :: Parser String
+parseDoctype = string "<!DOCTYPE html>"
+
 parseTag :: Parser String
 parseTag = do
   char '<'
