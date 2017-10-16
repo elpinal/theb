@@ -27,3 +27,10 @@ parseTag = do
   s <- many $ noneOf ">"
   char '>'
   return s
+
+parseCloseTag :: Parser String
+parseCloseTag = do
+  string "</"
+  s <- many $ noneOf ">"
+  char '>'
+  return s
