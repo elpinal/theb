@@ -37,3 +37,6 @@ parseCloseTag = do
   s <- many $ noneOf ">"
   char '>'
   return s
+
+emptyElements :: [String]
+emptyElements = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]
