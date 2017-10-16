@@ -7,6 +7,12 @@ data HTML =
     Text String
   | Node String [HTML]
 
+parse' :: Parser a -> String -> Either ParseError a
+parse' p s = parse p "" s
+
+parseHTML :: Parser HTML
+parseHTML = undefined
+
 parseDoctype :: Parser String
 parseDoctype = string "<!DOCTYPE html>"
 
