@@ -12,7 +12,11 @@ parse' :: Parser a -> String -> Either ParseError a
 parse' p s = parse p "" s
 
 parseHTML :: Parser HTML
-parseHTML = undefined
+parseHTML = do
+  parseDoctype
+  t <- parseTag
+  i <- manyTill anyChar (try (string "<"))
+  return $ Node t [Text i]
 
 parseDoctype :: Parser String
 parseDoctype = string "<!DOCTYPE html>"
