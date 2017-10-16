@@ -21,6 +21,25 @@ parseHTML = do
 parseDoctype :: Parser String
 parseDoctype = string "<!DOCTYPE html>"
 
+parseElement :: Parser HTML
+parseElement =
+  try parseElement' <|> do
+    t <- parseTag
+    xs <- manyTill parseElement' $ parseCloseTag
+    return $ Node t xs
+
+parseElement' :: Parser HTML
+parseElement' = do
+  t <- parseTag
+  if t `elem` emptyElements
+    then return $ Node t []
+    else do
+      s <- parseText
+      u <- parseCloseTag
+      if t == u
+        then return $ Node t [Text s]
+        else error "wrong close tag"
+
 parseText :: Parser String
 parseText = manyTill anyChar (lookAhead (string "<"))
 
