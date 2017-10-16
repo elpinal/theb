@@ -4,8 +4,8 @@ import Text.Parsec
 import Text.Parsec.String
 
 data HTML =
-    Elem String
-  | Children [HTML]
+    Text String
+  | Node String [HTML]
 
 parseDoctype :: Parser String
 parseDoctype = string "<!DOCTYPE html>"
