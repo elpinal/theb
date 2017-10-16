@@ -21,6 +21,9 @@ parseHTML = do
 parseDoctype :: Parser String
 parseDoctype = string "<!DOCTYPE html>"
 
+parseText :: Parser String
+parseText = manyTill anyChar (lookAhead (string "<"))
+
 parseTag :: Parser String
 parseTag = do
   char '<'
