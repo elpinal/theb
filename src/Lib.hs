@@ -14,9 +14,20 @@ parse' p s = parse p "" s
 parseHTML :: Parser HTML
 parseHTML = do
   parseDoctype
-  t <- parseTag
-  i <- manyTill anyChar (try (string "<"))
-  return $ Node t [Text i]
+  parseElement
+--  t <- parseTag
+--  s <- parseText
+--  case s of
+--    "" -> do
+--      u <- parseTag
+--      s <- parseText
+--      case s of
+--        "" -> do
+--          v <- parseTag
+--          s <- parseText
+--          return $ Node t [Node u [], Node v []]
+--        _ -> return $ Node t [Node u [Text s]]
+--    _ -> return $ Node t [Text s]
 
 parseDoctype :: Parser String
 parseDoctype = string "<!DOCTYPE html>"
@@ -25,7 +36,7 @@ parseElement :: Parser HTML
 parseElement =
   try parseElement' <|> do
     t <- parseTag
-    xs <- manyTill parseElement' $ parseCloseTag
+    xs <- manyTill parseElement' $ try parseCloseTag
     return $ Node t xs
 
 parseElement' :: Parser HTML
