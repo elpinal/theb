@@ -19,47 +19,47 @@ spec = do
       parse' parseElement "<html><head></head><body></body></html>" `shouldBe` Right (Node "html" [Node "head" [], Node "body" []])
       parse' parseElement "<html><head><title>aaa</title></head><body></body></html>" `shouldBe` Right (Node "html" [Node "head" [Node "title" [Text "aaa"]], Node "body" []])
 
-  describe "parseTag" $ do
-    it "parses an open tag" $ do
-      parse' parseTag "<>"    `shouldBe` Right ""
-      parse' parseTag "<a>"   `shouldBe` Right "a"
-      parse' parseTag "<AAA>" `shouldBe` Right "AAA"
-      parse' parseTag "<7>"   `shouldBe` Right "7"
-      parse' parseTag "<8xU>" `shouldBe` Right "8xU"
+  describe "parseStartTag" $ do
+    it "parses a start tag" $ do
+      parse' parseStartTag "<>"    `shouldBe` Right ""
+      parse' parseStartTag "<a>"   `shouldBe` Right "a"
+      parse' parseStartTag "<AAA>" `shouldBe` Right "AAA"
+      parse' parseStartTag "<7>"   `shouldBe` Right "7"
+      parse' parseStartTag "<8xU>" `shouldBe` Right "8xU"
 
     context "when given an invalid input" $
       it "fails" $ do
-        parse' parseTag ""       `shouldSatisfy` isLeft
-        parse' parseTag "<a"     `shouldSatisfy` isLeft
-        parse' parseTag "A>"     `shouldSatisfy` isLeft
-        parse' parseTag "</7>"   `shouldSatisfy` isLeft
-        parse' parseTag "< 8xU>" `shouldSatisfy` isLeft
-        parse' parseTag "< >"    `shouldSatisfy` isLeft
-        parse' parseTag "< />"   `shouldSatisfy` isLeft
-        parse' parseTag "<a >"   `shouldSatisfy` isLeft
-        parse' parseTag "<!>"    `shouldSatisfy` isLeft
-        parse' parseTag "<#a$>"  `shouldSatisfy` isLeft
+        parse' parseStartTag ""       `shouldSatisfy` isLeft
+        parse' parseStartTag "<a"     `shouldSatisfy` isLeft
+        parse' parseStartTag "A>"     `shouldSatisfy` isLeft
+        parse' parseStartTag "</7>"   `shouldSatisfy` isLeft
+        parse' parseStartTag "< 8xU>" `shouldSatisfy` isLeft
+        parse' parseStartTag "< >"    `shouldSatisfy` isLeft
+        parse' parseStartTag "< />"   `shouldSatisfy` isLeft
+        parse' parseStartTag "<a >"   `shouldSatisfy` isLeft
+        parse' parseStartTag "<!>"    `shouldSatisfy` isLeft
+        parse' parseStartTag "<#a$>"  `shouldSatisfy` isLeft
 
-  describe "parseCloseTag" $ do
-    it "parses an close tag" $ do
-      parse' parseCloseTag "</>"    `shouldBe` Right ""
-      parse' parseCloseTag "</a>"   `shouldBe` Right "a"
-      parse' parseCloseTag "</AAA>" `shouldBe` Right "AAA"
-      parse' parseCloseTag "</7>"   `shouldBe` Right "7"
-      parse' parseCloseTag "</8xU>" `shouldBe` Right "8xU"
+  describe "parseEndTag" $ do
+    it "parses an end tag" $ do
+      parse' parseEndTag "</>"    `shouldBe` Right ""
+      parse' parseEndTag "</a>"   `shouldBe` Right "a"
+      parse' parseEndTag "</AAA>" `shouldBe` Right "AAA"
+      parse' parseEndTag "</7>"   `shouldBe` Right "7"
+      parse' parseEndTag "</8xU>" `shouldBe` Right "8xU"
 
-      parse' parseCloseTag "</a >"  `shouldBe` Right "a"
-      parse' parseCloseTag "</a  >" `shouldBe` Right "a"
+      parse' parseEndTag "</a >"  `shouldBe` Right "a"
+      parse' parseEndTag "</a  >" `shouldBe` Right "a"
 
     context "when given an invalid input" $
       it "fails" $ do
-        parse' parseCloseTag ""        `shouldSatisfy` isLeft
-        parse' parseCloseTag "</a"     `shouldSatisfy` isLeft
-        parse' parseCloseTag "</a "    `shouldSatisfy` isLeft
-        parse' parseCloseTag "/A>"     `shouldSatisfy` isLeft
-        parse' parseCloseTag "<7>"     `shouldSatisfy` isLeft
-        parse' parseCloseTag "</ 8xU>" `shouldSatisfy` isLeft
-        parse' parseCloseTag "< >"     `shouldSatisfy` isLeft
-        parse' parseCloseTag "< />"    `shouldSatisfy` isLeft
-        parse' parseCloseTag "</!>"    `shouldSatisfy` isLeft
-        parse' parseCloseTag "</#a$>"  `shouldSatisfy` isLeft
+        parse' parseEndTag ""        `shouldSatisfy` isLeft
+        parse' parseEndTag "</a"     `shouldSatisfy` isLeft
+        parse' parseEndTag "</a "    `shouldSatisfy` isLeft
+        parse' parseEndTag "/A>"     `shouldSatisfy` isLeft
+        parse' parseEndTag "<7>"     `shouldSatisfy` isLeft
+        parse' parseEndTag "</ 8xU>" `shouldSatisfy` isLeft
+        parse' parseEndTag "< >"     `shouldSatisfy` isLeft
+        parse' parseEndTag "< />"    `shouldSatisfy` isLeft
+        parse' parseEndTag "</!>"    `shouldSatisfy` isLeft
+        parse' parseEndTag "</#a$>"  `shouldSatisfy` isLeft
