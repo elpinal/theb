@@ -72,7 +72,8 @@ parseStartTag = do
 parseAttr :: Parser (String, String)
 parseAttr = do
   k <- many1 alphaNum
-  v <- option "" $ char '=' >> parseValue
+  skipMany whitespace
+  v <- option "" $ char '=' >> skipMany whitespace >> parseValue
   return (k, v)
 
 parseValue :: Parser String
