@@ -78,8 +78,8 @@ parseAttr = do
 parseValue :: Parser String
 parseValue = choice
   [ many1 alphaNum
-  , quoted $ many alphaNum
-  , doubleQuoted $ many alphaNum
+  , quoted $ many $ noneOf "'"
+  , doubleQuoted $ many $ noneOf "\""
   ]
 
 quoted :: Parser a -> Parser a

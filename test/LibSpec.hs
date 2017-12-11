@@ -79,6 +79,12 @@ spec = do
       parse' parseAttr "a=\"b\"" `shouldBe` Right ("a", "b")
       parse' parseAttr "a8Z=343" `shouldBe` Right ("a8Z", "343")
 
+    context "when the value is quoted by single-/double-quotes" $
+      it "parses an attribute whose value contains some non-alphanumeric characters" $ do
+        parse' parseAttr "a=' '"              `shouldBe` Right ("a", " ")
+        parse' parseAttr "a=\" \""            `shouldBe` Right ("a", " ")
+        parse' parseAttr "a='abc\"-#@$<aa> '" `shouldBe` Right ("a", "abc\"-#@$<aa> ")
+
     context "when given an invalid input" $
       it "fails" $ do
         parse' parseAttr "a="   `shouldSatisfy` isLeft
