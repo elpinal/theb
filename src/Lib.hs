@@ -71,9 +71,7 @@ parseTag = do
 parseCloseTag :: Parser String
 parseCloseTag = do
   string "</"
-  s <- many $ noneOf ">"
-  char '>'
-  return s
+  manyTill alphaNum $ char '>'
 
 emptyElements :: [String]
 emptyElements = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]
