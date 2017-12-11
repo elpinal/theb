@@ -50,15 +50,15 @@ parseElement' = do
   if t `elem` emptyElements
     then return $ Node t []
     else do
-      s <- parseText
+      s <- parseTextMay
       u <- parseCloseTag
       if t == u
         then return . Node t $ maybeToList s
         else error "wrong close tag"
 
-parseText :: Parser (Maybe HTML)
-parseText = do
-  s <- manyTill anyChar (lookAhead (string "<"))
+parseTextMay :: Parser (Maybe HTML)
+parseTextMay = do
+  s <- manyTill anyChar . lookAhead $ string "<"
   if s /= ""
     then return . Just $ Text s
     else return Nothing
