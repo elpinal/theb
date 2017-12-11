@@ -68,6 +68,26 @@ parseStartTag = do
   char '<'
   manyTill alphaNum $ char '>'
 
+-- TODO: The use of alphaNum is too conservative.
+parseAttr :: Parser (String, String)
+parseAttr = do
+  k <- many1 alphaNum
+  v <- option "" $ char '=' >> parseValue
+  return (k, v)
+
+parseValue :: Parser String
+parseValue = choice
+  [ many1 alphaNum
+  , quoted $ many alphaNum
+  , doubleQuoted $ many alphaNum
+  ]
+
+quoted :: Parser a -> Parser a
+quoted = between (char '\'') (char '\'')
+
+doubleQuoted :: Parser a -> Parser a
+doubleQuoted = between (char '"') (char '"')
+
 parseEndTag :: Parser String
 parseEndTag = do
   string "</"
