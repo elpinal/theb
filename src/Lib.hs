@@ -3,6 +3,8 @@ module Lib where
 import Text.Parsec
 import Text.Parsec.String
 
+import Data.Maybe
+
 data HTML =
     Text String
   | Node String [HTML]
@@ -48,11 +50,15 @@ parseElement' = do
       s <- parseText
       u <- parseCloseTag
       if t == u
-        then return $ Node t [Text s]
+        then return . Node t $ maybeToList s
         else error "wrong close tag"
 
-parseText :: Parser String
-parseText = manyTill anyChar (lookAhead (string "<"))
+parseText :: Parser (Maybe HTML)
+parseText = do
+  s <- manyTill anyChar (lookAhead (string "<"))
+  if s /= ""
+    then return . Just $ Text s
+    else return Nothing
 
 parseTag :: Parser String
 parseTag = do
