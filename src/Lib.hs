@@ -41,7 +41,7 @@ parseElement :: Parser HTML
 parseElement =
   try parseElement' <|> do
     t <- parseTag
-    xs <- manyTill parseElement' $ try parseCloseTag
+    xs <- manyTill parseElement $ try parseCloseTag
     return $ Node t xs
 
 parseElement' :: Parser HTML
