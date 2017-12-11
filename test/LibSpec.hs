@@ -70,3 +70,16 @@ spec = do
         parse' parseEndTag "< />"    `shouldSatisfy` isLeft
         parse' parseEndTag "</!>"    `shouldSatisfy` isLeft
         parse' parseEndTag "</#a$>"  `shouldSatisfy` isLeft
+
+  describe "parseAttr" $ do
+    it "parses an attribute" $ do
+      parse' parseAttr "a=b"     `shouldBe` Right ("a", "b")
+      parse' parseAttr "a='b'"   `shouldBe` Right ("a", "b")
+      parse' parseAttr "a=\"b\"" `shouldBe` Right ("a", "b")
+      parse' parseAttr "a8Z=343" `shouldBe` Right ("a8Z", "343")
+
+    context "when given an invalid input" $
+      it "fails" $ do
+        parse' parseAttr "a="   `shouldSatisfy` isLeft
+        parse' parseAttr "a='"  `shouldSatisfy` isLeft
+        parse' parseAttr "a=\"" `shouldSatisfy` isLeft
