@@ -66,9 +66,7 @@ parseTextMay = do
 parseTag :: Parser String
 parseTag = do
   char '<'
-  s <- many $ noneOf ">"
-  char '>'
-  return s
+  manyTill alphaNum $ char '>'
 
 parseCloseTag :: Parser String
 parseCloseTag = do
