@@ -73,6 +73,7 @@ spec = do
 
   describe "parseAttr" $ do
     it "parses an attribute" $ do
+      parse' parseAttr "a"       `shouldBe` Right ("a", "")
       parse' parseAttr "a=b"     `shouldBe` Right ("a", "b")
       parse' parseAttr "a='b'"   `shouldBe` Right ("a", "b")
       parse' parseAttr "a=\"b\"" `shouldBe` Right ("a", "b")
