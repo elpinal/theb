@@ -31,8 +31,11 @@ parseHTML = do
 --        _ -> return $ Node t [Node u [Text s]]
 --    _ -> return $ Node t [Text s]
 
+doctype :: String
+doctype = "<!DOCTYPE html>"
+
 parseDoctype :: Parser String
-parseDoctype = string "<!DOCTYPE html>"
+parseDoctype = string doctype
 
 parseElement :: Parser HTML
 parseElement =
