@@ -48,15 +48,18 @@ spec = do
       parse' parseCloseTag "</7>"   `shouldBe` Right "7"
       parse' parseCloseTag "</8xU>" `shouldBe` Right "8xU"
 
+      parse' parseCloseTag "</a >"  `shouldBe` Right "a"
+      parse' parseCloseTag "</a  >" `shouldBe` Right "a"
+
     context "when given an invalid input" $
       it "fails" $ do
         parse' parseCloseTag ""        `shouldSatisfy` isLeft
         parse' parseCloseTag "</a"     `shouldSatisfy` isLeft
+        parse' parseCloseTag "</a "    `shouldSatisfy` isLeft
         parse' parseCloseTag "/A>"     `shouldSatisfy` isLeft
         parse' parseCloseTag "<7>"     `shouldSatisfy` isLeft
         parse' parseCloseTag "</ 8xU>" `shouldSatisfy` isLeft
         parse' parseCloseTag "< >"     `shouldSatisfy` isLeft
         parse' parseCloseTag "< />"    `shouldSatisfy` isLeft
-        parse' parseCloseTag "</a >"   `shouldSatisfy` isLeft
         parse' parseCloseTag "</!>"    `shouldSatisfy` isLeft
         parse' parseCloseTag "</#a$>"  `shouldSatisfy` isLeft

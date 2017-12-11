@@ -71,7 +71,16 @@ parseTag = do
 parseCloseTag :: Parser String
 parseCloseTag = do
   string "</"
-  manyTill alphaNum $ char '>'
+  manyTill alphaNum $ many whitespace >> char '>'
+
+whitespace :: Parser Char
+whitespace = (choice . map char)
+  [ '\x09'
+  , '\x0a'
+  , '\x0c'
+  , '\x0d'
+  , ' '
+  ] <?> "whitespace"
 
 emptyElements :: [String]
 emptyElements = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]
