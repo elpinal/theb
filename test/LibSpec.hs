@@ -13,11 +13,18 @@ spec = do
       parse' parseHTML "<!DOCTYPE html><html>aaa</html>" `shouldBe` Right (Node "html" [Text "aaa"])
       parse' parseHTML "<!DOCTYPE html><html><head></head><body></body></html>" `shouldBe` Right (Node "html" [Node "head" [], Node "body" []])
 
-  describe "parseElement" $
+  describe "parseElement" $ do
     it "parses an element" $ do
       parse' parseElement "<html>aaa</html>" `shouldBe` Right (Node "html" [Text "aaa"])
       parse' parseElement "<html><head></head><body></body></html>" `shouldBe` Right (Node "html" [Node "head" [], Node "body" []])
       parse' parseElement "<html><head><title>aaa</title></head><body></body></html>" `shouldBe` Right (Node "html" [Node "head" [Node "title" [Text "aaa"]], Node "body" []])
+
+    it "parses a void element" $ do
+      parse' parseElement "<meta>" `shouldBe` Right (Node "meta" [])
+
+    context "when given an invalid input" $
+      it "fails" $ do
+        parse' parseElement "<aaa>" `shouldSatisfy` isLeft
 
   describe "parseStartTag" $ do
     it "parses a start tag" $ do
