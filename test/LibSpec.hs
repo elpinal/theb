@@ -27,13 +27,15 @@ spec = do
       parse' parseTag "<7>"   `shouldBe` Right "7"
       parse' parseTag "<8xU>" `shouldBe` Right "8xU"
 
-    context "given an invalid input" $
+    context "when given an invalid input" $
       it "fails" $ do
-        parse' parseTag ""      `shouldSatisfy` isLeft
-        parse' parseTag "<a"    `shouldSatisfy` isLeft
-        parse' parseTag "A>"    `shouldSatisfy` isLeft
-        parse' parseTag "</7>"  `shouldSatisfy` isLeft
-        parse' parseTag "< 8xU>"`shouldSatisfy` isLeft
-        parse' parseTag "< >"   `shouldSatisfy` isLeft
-        parse' parseTag "< />"  `shouldSatisfy` isLeft
-        parse' parseTag "<a >"  `shouldSatisfy` isLeft
+        parse' parseTag ""       `shouldSatisfy` isLeft
+        parse' parseTag "<a"     `shouldSatisfy` isLeft
+        parse' parseTag "A>"     `shouldSatisfy` isLeft
+        parse' parseTag "</7>"   `shouldSatisfy` isLeft
+        parse' parseTag "< 8xU>" `shouldSatisfy` isLeft
+        parse' parseTag "< >"    `shouldSatisfy` isLeft
+        parse' parseTag "< />"   `shouldSatisfy` isLeft
+        parse' parseTag "<a >"   `shouldSatisfy` isLeft
+        parse' parseTag "<!>"    `shouldSatisfy` isLeft
+        parse' parseTag "<#a$>"  `shouldSatisfy` isLeft
