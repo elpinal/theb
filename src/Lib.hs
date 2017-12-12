@@ -59,7 +59,7 @@ parseStartTag = do
   return (s, as)
 
 -- TODO: The use of alphaNum is too conservative.
-parseAttr :: Parser (String, String)
+parseAttr :: Parser Attr
 parseAttr = do
   k <- many1 alphaNum
   skipMany whitespace
