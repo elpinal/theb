@@ -45,7 +45,7 @@ parseElement' = do
 
 parseTextMay :: Parser (Maybe HTML)
 parseTextMay = do
-  s <- manyTill anyChar . lookAhead $ string "<"
+  s <- manyTill anyChar . lookAhead $ char '<'
   if s /= ""
     then return . Just $ Text s
     else return Nothing
