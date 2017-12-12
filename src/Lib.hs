@@ -10,6 +10,8 @@ data HTML =
   | Node String [HTML]
   deriving (Eq, Show)
 
+type Attr = (String, String)
+
 parse' :: Parser a -> String -> Either ParseError a
 parse' p s = parse p "" s
 
