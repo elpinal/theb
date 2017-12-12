@@ -54,7 +54,7 @@ parseStartTag :: Parser (String, [Attr])
 parseStartTag = do
   char '<'
   s <- many alphaNum
-  as <- many parseAttr
+  as <- many $ try $ skipMany whitespace >> parseAttr
   char '>'
   return (s, as)
 
