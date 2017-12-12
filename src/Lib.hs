@@ -19,19 +19,6 @@ parseHTML :: Parser HTML
 parseHTML = do
   parseDoctype
   parseElement
---  t <- parseStartTag
---  s <- parseText
---  case s of
---    "" -> do
---      u <- parseStartTag
---      s <- parseText
---      case s of
---        "" -> do
---          v <- parseStartTag
---          s <- parseText
---          return $ Node t [Node u [], Node v []]
---        _ -> return $ Node t [Node u [Text s]]
---    _ -> return $ Node t [Text s]
 
 doctype :: String
 doctype = "<!DOCTYPE html>"
