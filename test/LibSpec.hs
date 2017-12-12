@@ -28,11 +28,11 @@ spec = do
 
   describe "parseStartTag" $ do
     it "parses a start tag" $ do
-      parse' parseStartTag "<>"    `shouldBe` Right ""
-      parse' parseStartTag "<a>"   `shouldBe` Right "a"
-      parse' parseStartTag "<AAA>" `shouldBe` Right "AAA"
-      parse' parseStartTag "<7>"   `shouldBe` Right "7"
-      parse' parseStartTag "<8xU>" `shouldBe` Right "8xU"
+      parse' parseStartTag "<>"    `shouldBe` Right ("", [])
+      parse' parseStartTag "<a>"   `shouldBe` Right ("a", [])
+      parse' parseStartTag "<AAA>" `shouldBe` Right ("AAA", [])
+      parse' parseStartTag "<7>"   `shouldBe` Right ("7", [])
+      parse' parseStartTag "<8xU>" `shouldBe` Right ("8xU", [])
 
     context "when given an invalid input" $
       it "fails" $ do
