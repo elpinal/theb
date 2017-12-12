@@ -33,7 +33,10 @@ spec = do
       parse' parseStartTag "<7>"   `shouldBe` Right ("7", [])
       parse' parseStartTag "<8xU>" `shouldBe` Right ("8xU", [])
 
-      parse' parseStartTag "<a b=c>"    `shouldBe` Right ("a", [("b", "c")])
+      parse' parseStartTag "<a b>"       `shouldBe` Right ("a", [("b", "")])
+      parse' parseStartTag "<a b=c>"     `shouldBe` Right ("a", [("b", "c")])
+      parse' parseStartTag "<a b='c'>"   `shouldBe` Right ("a", [("b", "c")])
+      parse' parseStartTag "<a b=\"c\">" `shouldBe` Right ("a", [("b", "c")])
 
     context "when given an invalid input" $
       it "fails" $ do
