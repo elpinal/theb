@@ -7,7 +7,7 @@ import Data.Maybe
 
 data HTML =
     Text String
-  | Node String [HTML]
+  | Node String [Attr] [HTML]
   deriving (Eq, Show)
 
 type Attr = (String, String)
