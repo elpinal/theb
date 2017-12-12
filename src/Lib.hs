@@ -27,13 +27,13 @@ parseDoctype = string doctype
 parseElement :: Parser HTML
 parseElement =
   try parseElement' <|> do
-    t <- parseStartTag
+    (t, _) <- parseStartTag
     xs <- manyTill parseElement $ try parseEndTag
     return $ Node t [] xs
 
 parseElement' :: Parser HTML
 parseElement' = do
-  t <- parseStartTag
+  (t, _) <- parseStartTag
   if t `elem` voidElements
     then return $ Node t [] []
     else do
@@ -50,10 +50,11 @@ parseTextMay = do
     then return . Just $ Text s
     else return Nothing
 
-parseStartTag :: Parser String
+parseStartTag :: Parser (String, [Attr])
 parseStartTag = do
   char '<'
-  manyTill alphaNum $ char '>'
+  s <- manyTill alphaNum $ char '>'
+  return (s, [])
 
 -- TODO: The use of alphaNum is too conservative.
 parseAttr :: Parser (String, String)
