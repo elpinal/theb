@@ -53,7 +53,8 @@ parseTextMay = do
 parseStartTag :: Parser (String, [Attr])
 parseStartTag = do
   char '<'
-  s <- manyTill alphaNum $ char '>'
+  s <- many alphaNum
+  char '>'
   return (s, [])
 
 -- TODO: The use of alphaNum is too conservative.
