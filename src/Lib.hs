@@ -16,9 +16,7 @@ parse' :: Parser a -> String -> Either ParseError a
 parse' p s = parse p "" s
 
 parseHTML :: Parser HTML
-parseHTML = do
-  parseDoctype
-  parseElement
+parseHTML = parseDoctype >> parseElement
 
 doctype :: String
 doctype = "<!DOCTYPE html>"
