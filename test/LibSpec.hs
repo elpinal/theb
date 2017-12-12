@@ -28,7 +28,6 @@ spec = do
 
   describe "parseStartTag" $ do
     it "parses a start tag" $ do
-      parse' parseStartTag "<>"    `shouldBe` Right ("", [])
       parse' parseStartTag "<a>"   `shouldBe` Right ("a", [])
       parse' parseStartTag "<AAA>" `shouldBe` Right ("AAA", [])
       parse' parseStartTag "<7>"   `shouldBe` Right ("7", [])
@@ -39,6 +38,7 @@ spec = do
     context "when given an invalid input" $
       it "fails" $ do
         parse' parseStartTag ""       `shouldSatisfy` isLeft
+        parse' parseStartTag "<>"     `shouldSatisfy` isLeft
         parse' parseStartTag "<a"     `shouldSatisfy` isLeft
         parse' parseStartTag "A>"     `shouldSatisfy` isLeft
         parse' parseStartTag "</7>"   `shouldSatisfy` isLeft
