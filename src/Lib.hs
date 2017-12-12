@@ -53,7 +53,7 @@ parseTextMay = do
 parseStartTag :: Parser (String, [Attr])
 parseStartTag = do
   char '<'
-  s <- many alphaNum
+  s <- many1 alphaNum
   as <- many $ try $ skipMany whitespace >> parseAttr
   char '>'
   return (s, as)
