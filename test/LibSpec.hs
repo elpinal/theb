@@ -38,6 +38,8 @@ spec = do
       parse' parseStartTag "<a b='c'>"   `shouldBe` Right ("a", [("b", "c")])
       parse' parseStartTag "<a b=\"c\">" `shouldBe` Right ("a", [("b", "c")])
 
+      parse' parseStartTag "<a b=c d=e>"     `shouldBe` Right ("a", [("b", "c"), ("d", "e")])
+
     context "when given an invalid input" $
       it "fails" $ do
         parse' parseStartTag ""       `shouldSatisfy` isLeft
