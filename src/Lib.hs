@@ -82,7 +82,9 @@ doubleQuoted = between (char '"') (char '"')
 parseEndTag :: Parser String
 parseEndTag = do
   string "</"
-  manyTill alphaNum $ many whitespace >> char '>'
+  s <- many1 alphaNum
+  many whitespace >> char '>'
+  return s
 
 whitespace :: Parser Char
 whitespace = (choice . map char)
