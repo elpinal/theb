@@ -54,8 +54,9 @@ parseStartTag :: Parser (String, [Attr])
 parseStartTag = do
   char '<'
   s <- many alphaNum
+  as <- many parseAttr
   char '>'
-  return (s, [])
+  return (s, as)
 
 -- TODO: The use of alphaNum is too conservative.
 parseAttr :: Parser (String, String)
