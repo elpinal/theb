@@ -51,7 +51,6 @@ spec = do
 
   describe "parseEndTag" $ do
     it "parses an end tag" $ do
-      parse' parseEndTag "</>"    `shouldBe` Right ""
       parse' parseEndTag "</a>"   `shouldBe` Right "a"
       parse' parseEndTag "</AAA>" `shouldBe` Right "AAA"
       parse' parseEndTag "</7>"   `shouldBe` Right "7"
@@ -63,6 +62,7 @@ spec = do
     context "when given an invalid input" $
       it "fails" $ do
         parse' parseEndTag ""        `shouldSatisfy` isLeft
+        parse' parseEndTag "</>"     `shouldSatisfy` isLeft
         parse' parseEndTag "</a"     `shouldSatisfy` isLeft
         parse' parseEndTag "</a "    `shouldSatisfy` isLeft
         parse' parseEndTag "/A>"     `shouldSatisfy` isLeft
