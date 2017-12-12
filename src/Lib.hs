@@ -55,6 +55,7 @@ parseStartTag = do
   char '<'
   s <- many1 alphaNum
   as <- many $ try $ skipMany whitespace >> parseAttr
+  skipMany whitespace
   char '>'
   return (s, as)
 
