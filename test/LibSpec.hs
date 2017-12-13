@@ -29,6 +29,7 @@ spec = do
   describe "parseStartTag" $ do
     it "parses a start tag" $ do
       parse' parseStartTag "<a>"   `shouldBe` Right ("a", [])
+      parse' parseStartTag "<a >"  `shouldBe` Right ("a", [])
       parse' parseStartTag "<AAA>" `shouldBe` Right ("AAA", [])
       parse' parseStartTag "<7>"   `shouldBe` Right ("7", [])
       parse' parseStartTag "<8xU>" `shouldBe` Right ("8xU", [])
@@ -51,7 +52,6 @@ spec = do
         parse' parseStartTag "< 8xU>" `shouldSatisfy` isLeft
         parse' parseStartTag "< >"    `shouldSatisfy` isLeft
         parse' parseStartTag "< />"   `shouldSatisfy` isLeft
-        parse' parseStartTag "<a >"   `shouldSatisfy` isLeft
         parse' parseStartTag "<!>"    `shouldSatisfy` isLeft
         parse' parseStartTag "<#a$>"  `shouldSatisfy` isLeft
 
