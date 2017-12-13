@@ -22,6 +22,10 @@ spec = do
     it "parses a void element" $ do
       parse' parseElement "<meta>" `shouldBe` Right (Node "meta" [] [])
 
+    it "parses an element which has some attributes" $ do
+      parse' parseElement "<p class=hi></p>"                        `shouldBe` Right (Node "p" [("class", "hi")] [])
+      parse' parseElement "<p class='hi' id=13 value><b>aa</b></p>" `shouldBe` Right (Node "p" [("class", "hi"), ("id", "13"), ("value", "")] [Node "b" [] [Text "aa"]])
+
     context "when given an invalid input" $
       it "fails" $ do
         parse' parseElement "<aaa>" `shouldSatisfy` isLeft

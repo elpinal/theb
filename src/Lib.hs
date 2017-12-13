@@ -27,20 +27,20 @@ parseDoctype = string doctype
 parseElement :: Parser HTML
 parseElement =
   try parseElement' <|> do
-    (t, _) <- parseStartTag
+    (t, as) <- parseStartTag
     xs <- manyTill parseElement $ try parseEndTag
-    return $ Node t [] xs
+    return $ Node t as xs
 
 parseElement' :: Parser HTML
 parseElement' = do
-  (t, _) <- parseStartTag
+  (t, as) <- parseStartTag
   if t `elem` voidElements
-    then return $ Node t [] []
+    then return $ Node t as []
     else do
       s <- parseTextMay
       u <- parseEndTag
       if t == u
-        then return . Node t [] $ maybeToList s
+        then return . Node t as $ maybeToList s
         else error "wrong close tag"
 
 parseTextMay :: Parser (Maybe HTML)
