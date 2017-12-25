@@ -53,6 +53,7 @@ parseTextMay = do
   s <- manyTill anyChar . lookAhead $ char '<'
   f s
   where
+    f :: String -> Parser (Maybe HTML)
     f "" = return Nothing
     f s  = return . Just $ Text s
 
