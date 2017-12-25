@@ -49,11 +49,11 @@ parseElement' = do
         else error "wrong close tag"
 
 parseTextMay :: Parser (Maybe HTML)
-parseTextMay = (manyTill anyChar . lookAhead) (char '<') >>= f
+parseTextMay = (manyTill anyChar . lookAhead) (char '<') >>= return . f
   where
-    f :: String -> Parser (Maybe HTML)
-    f "" = return Nothing
-    f s  = return . Just $ Text s
+    f :: String -> Maybe HTML
+    f "" = Nothing
+    f s  = return $ Text s
 
 parseStartTag :: Parser (String, [Attr])
 parseStartTag = do
