@@ -7,4 +7,4 @@ type URI = String
 class Monad h => Http h where
   get :: URI -> h String
 
-open :: Http h => h HTML
+open :: Http h => URI -> h (Either Error HTML)
