@@ -4,7 +4,7 @@ import Lib
 
 type URI = String
 
-class Http h where
+class Monad h => Http h where
   get :: URI -> h String
 
 open :: Http h => h HTML
