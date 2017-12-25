@@ -6,3 +6,5 @@ type URI = String
 
 class Http h where
   get :: URI -> h String
+
+open :: Http h => h HTML
