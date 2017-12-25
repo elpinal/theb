@@ -1,4 +1,6 @@
 module Browser.Theb where
 
+type URI = String
+
 class Http h where
-  get :: String -> h String
+  get :: URI -> h String
