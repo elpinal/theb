@@ -14,10 +14,10 @@ type Attr = (String, String)
 
 type Error = ParseError
 
-html :: String -> Either ParseError HTML
+html :: String -> Either Error HTML
 html = parse' parseHTML
 
-parse' :: Parser a -> String -> Either ParseError a
+parse' :: Parser a -> String -> Either Error a
 parse' p s = parse p "" s
 
 parseHTML :: Parser HTML
