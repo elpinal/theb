@@ -49,9 +49,7 @@ parseElement' = do
         else error "wrong close tag"
 
 parseTextMay :: Parser (Maybe HTML)
-parseTextMay = do
-  s <- manyTill anyChar . lookAhead $ char '<'
-  f s
+parseTextMay = (manyTill anyChar . lookAhead) (char '<') >>= f
   where
     f :: String -> Parser (Maybe HTML)
     f "" = return Nothing
