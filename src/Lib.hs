@@ -12,6 +12,9 @@ data HTML =
 
 type Attr = (String, String)
 
+html :: String -> Either ParseError HTML
+html = parse' parseHTML
+
 parse' :: Parser a -> String -> Either ParseError a
 parse' p s = parse p "" s
 
